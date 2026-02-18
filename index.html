@@ -7,28 +7,34 @@
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Colores principales - Azul predominante */
-            --sodexo-blue: #0066B3;
-            --sodexo-blue-dark: #004F8C;
-            --sodexo-blue-light: #1A7BC4;
+            /* Mix Sodexo-BBVA - Colores suavizados */
+            --bbva-blue: #004481;
+            --bbva-blue-light: #1A7BC4;
+            --bbva-blue-lighter: #0099CC;
+            
             --sodexo-pink: #E4003B;
+            --sodexo-pink-soft: #E6528D;
+            --sodexo-pink-lighter: #F298B5;
+            
+            --sodexo-blue: #0066B3;
             --sodexo-gray: #54565A;
             --sodexo-gray-light: #7D7F83;
             
-            --primary: var(--sodexo-blue);
-            --primary-light: var(--sodexo-blue-light);
-            --primary-dark: var(--sodexo-blue-dark);
-            --accent: var(--sodexo-pink);
-            --accent-light: #FF1A56;
+            /* Colores principales del portal */
+            --primary: var(--bbva-blue-light);
+            --primary-light: var(--bbva-blue-lighter);
+            --primary-dark: var(--bbva-blue);
+            --accent: var(--sodexo-pink-soft);
+            --accent-light: var(--sodexo-pink-lighter);
             
             --bg-main: #f8f9fc;
             --bg-card: #ffffff;
             --text-primary: #1a202c;
             --text-secondary: #64748b;
             --border: #e2e8f0;
-            --shadow-sm: 0 2px 8px rgba(0, 102, 179, 0.08);
-            --shadow-md: 0 8px 24px rgba(0, 102, 179, 0.12);
-            --shadow-lg: 0 16px 48px rgba(0, 102, 179, 0.16);
+            --shadow-sm: 0 2px 8px rgba(26, 123, 196, 0.08);
+            --shadow-md: 0 8px 24px rgba(26, 123, 196, 0.12);
+            --shadow-lg: 0 16px 48px rgba(26, 123, 196, 0.16);
         }
 
         * {
@@ -66,7 +72,7 @@
             padding: 1.5rem 0;
             box-shadow: var(--shadow-md);
             margin-bottom: 1.5rem;
-            border-bottom: 4px solid var(--sodexo-blue);
+            border-bottom: 4px solid var(--bbva-blue-light);
             animation: slideDown 0.6s ease-out;
             position: sticky;
             top: 0;
@@ -182,7 +188,7 @@
             align-items: center;
             gap: 0.6rem;
             padding: 0.5rem 1rem;
-            background: linear-gradient(135deg, var(--sodexo-blue) 0%, var(--sodexo-blue-light) 100%);
+            background: linear-gradient(135deg, var(--bbva-blue-light) 0%, var(--bbva-blue-lighter) 100%);
             border-radius: 50px;
             color: white;
             font-weight: 500;
@@ -220,7 +226,7 @@
 
         /* Welcome Section - Mobile First */
         .welcome {
-            background: linear-gradient(135deg, var(--sodexo-blue) 0%, var(--sodexo-blue-dark) 100%);
+            background: linear-gradient(135deg, var(--bbva-blue-light) 0%, var(--bbva-blue) 100%);
             padding: 1.75rem;
             border-radius: 16px;
             color: white;
@@ -364,6 +370,87 @@
             }
         }
 
+        /* Section Banners - Visual Differentiation */
+        .section-banner {
+            padding: 1.5rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            animation: fadeInUp 0.8s ease-out 0.3s both;
+            box-shadow: var(--shadow-md);
+        }
+
+        @media (min-width: 768px) {
+            .section-banner {
+                padding: 2rem 2.5rem;
+                margin-bottom: 2.5rem;
+            }
+        }
+
+        .section-banner-icon {
+            font-size: 2.5rem;
+            flex-shrink: 0;
+        }
+
+        @media (min-width: 768px) {
+            .section-banner-icon {
+                font-size: 3.5rem;
+            }
+        }
+
+        .section-banner-content h3 {
+            font-family: 'Sora', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        @media (min-width: 768px) {
+            .section-banner-content h3 {
+                font-size: 1.6rem;
+            }
+        }
+
+        .section-banner-content p {
+            font-size: 0.9rem;
+            opacity: 0.95;
+        }
+
+        @media (min-width: 768px) {
+            .section-banner-content p {
+                font-size: 1rem;
+            }
+        }
+
+        /* Registros Section - BBVA Blue (trabajo para el cliente) */
+        .section-registros {
+            background: linear-gradient(135deg, var(--bbva-blue-light) 0%, var(--bbva-blue) 100%);
+            color: white;
+            border-left: 6px solid var(--sodexo-pink-soft);
+        }
+
+        /* Consultas Section - Sodexo Pink Soft (herramientas Sodexo) */
+        .section-consultas {
+            background: linear-gradient(135deg, var(--sodexo-pink-soft) 0%, var(--sodexo-pink) 100%);
+            color: white;
+            border-left: 6px solid var(--bbva-blue);
+        }
+
+        /* Visual separator between sections */
+        .section-divider {
+            margin: 3rem 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent 0%, var(--border) 20%, var(--border) 80%, transparent 100%);
+        }
+
+        @media (min-width: 768px) {
+            .section-divider {
+                margin: 4rem 0;
+            }
+        }
+
         /* Grid - Mobile First */
         .forms-grid {
             display: grid;
@@ -425,7 +512,7 @@
             left: 0;
             width: 100%;
             height: 4px;
-            background: linear-gradient(90deg, var(--sodexo-blue) 0%, var(--sodexo-blue-light) 100%);
+            background: linear-gradient(90deg, var(--bbva-blue-light) 0%, var(--bbva-blue-lighter) 100%);
             transform: scaleX(0);
             transform-origin: left;
             transition: transform 0.3s ease;
@@ -452,7 +539,7 @@
             .form-card:hover {
                 transform: translateY(-8px);
                 box-shadow: var(--shadow-lg);
-                border-color: var(--sodexo-blue-light);
+                border-color: var(--bbva-blue-lighter);
             }
 
             .form-card:hover::before {
@@ -467,7 +554,7 @@
         .card-icon {
             width: 56px;
             height: 56px;
-            background: linear-gradient(135deg, var(--sodexo-blue-light) 0%, var(--sodexo-blue) 100%);
+            background: linear-gradient(135deg, var(--bbva-blue-lighter) 0%, var(--bbva-blue-light) 100%);
             border-radius: 14px;
             display: flex;
             align-items: center;
@@ -524,7 +611,7 @@
             gap: 0.5rem;
             width: 100%;
             padding: 1rem 1.5rem;
-            background: linear-gradient(135deg, var(--sodexo-pink) 0%, var(--accent-light) 100%);
+            background: linear-gradient(135deg, var(--sodexo-pink-soft) 0%, var(--sodexo-pink) 100%);
             color: white;
             text-decoration: none;
             border-radius: 10px;
@@ -533,7 +620,7 @@
             transition: all 0.3s ease;
             border: none;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(228, 0, 59, 0.3);
+            box-shadow: 0 4px 12px rgba(230, 82, 141, 0.3);
             /* Better touch target */
             min-height: 48px;
         }
@@ -552,8 +639,8 @@
         @media (min-width: 768px) {
             .card-button:hover {
                 transform: translateX(4px);
-                box-shadow: 0 6px 20px rgba(228, 0, 59, 0.4);
-                background: linear-gradient(135deg, var(--accent-light) 0%, var(--sodexo-pink) 100%);
+                box-shadow: 0 6px 20px rgba(230, 82, 141, 0.4);
+                background: linear-gradient(135deg, var(--sodexo-pink-lighter) 0%, var(--sodexo-pink-soft) 100%);
             }
         }
 
@@ -622,14 +709,14 @@
 
         .resource-item:active {
             background: white;
-            border-color: var(--sodexo-blue);
+            border-color: var(--bbva-blue-light);
             transform: scale(0.98);
         }
 
         @media (min-width: 768px) {
             .resource-item:hover {
                 background: white;
-                border-color: var(--sodexo-blue);
+                border-color: var(--bbva-blue-light);
                 transform: translateX(4px);
             }
         }
@@ -725,12 +812,12 @@
             }
 
             ::-webkit-scrollbar-thumb {
-                background: var(--sodexo-blue);
+                background: var(--bbva-blue-light);
                 border-radius: 5px;
             }
 
             ::-webkit-scrollbar-thumb:hover {
-                background: var(--sodexo-blue-dark);
+                background: var(--bbva-blue);
             }
         }
 
@@ -772,10 +859,13 @@
             <p style="margin-top: 1rem; font-weight: 600; font-size: 1.05rem; opacity: 0.95; letter-spacing: 0.5px;">✨ Somos agentes de servicio SODEXO</p>
         </div>
 
-        <section class="section-header">
-            <h3>Formularios de Gestión</h3>
-            <p>Completa los registros necesarios para tus operaciones diarias</p>
-        </section>
+        <div class="section-banner section-registros">
+            <div class="section-banner-icon">📝</div>
+            <div class="section-banner-content">
+                <h3>Registros y Formularios</h3>
+                <p>Completa los registros necesarios para tus operaciones diarias</p>
+            </div>
+        </div>
 
         <div class="forms-grid">
             <!-- Card 1: Control de Movilidades -->
@@ -833,7 +923,19 @@
                 <p class="card-description">Solicita uniformes para personal nuevo o renovación de uniformes para personal antiguo.</p>
                 <a href="#" class="card-button" onclick="openForm('uniformes')">Acceder al formulario</a>
             </div>
+        </div>
 
+        <div class="section-divider"></div>
+
+        <div class="section-banner section-consultas">
+            <div class="section-banner-icon">📂</div>
+            <div class="section-banner-content">
+                <h3>Consultas y Gestión</h3>
+                <p>Información y herramientas para la supervisión de tu equipo</p>
+            </div>
+        </div>
+
+        <div class="forms-grid">
             <!-- Card 8: Directorio Telefónico -->
             <div class="form-card">
                 <div class="card-icon">📞</div>
