@@ -370,84 +370,177 @@
             }
         }
 
-        /* Section Banners - Visual Differentiation */
+        /* Section Banners - Clear Section Headers (NOT cards) */
         .section-banner {
-            padding: 1.5rem;
-            border-radius: 16px;
-            margin-bottom: 2rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
+            padding: 0;
+            margin-bottom: 2.5rem;
+            border-bottom: 4px solid;
+            padding-bottom: 1.5rem;
             animation: fadeInUp 0.8s ease-out 0.3s both;
-            box-shadow: var(--shadow-md);
+            background: transparent;
         }
 
         @media (min-width: 768px) {
             .section-banner {
-                padding: 2rem 2.5rem;
-                margin-bottom: 2.5rem;
+                margin-bottom: 3rem;
+                padding-bottom: 2rem;
+                border-bottom: 5px solid;
             }
         }
 
         .section-banner-icon {
-            font-size: 2.5rem;
-            flex-shrink: 0;
+            font-size: 3.5rem;
+            display: block;
+            margin-bottom: 0.75rem;
         }
 
         @media (min-width: 768px) {
             .section-banner-icon {
-                font-size: 3.5rem;
+                font-size: 5rem;
+                margin-bottom: 1rem;
             }
+        }
+
+        .section-banner-content {
+            text-align: left;
         }
 
         .section-banner-content h3 {
             font-family: 'Sora', sans-serif;
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 0.25rem;
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.03em;
+            text-transform: uppercase;
+            line-height: 1.1;
         }
 
         @media (min-width: 768px) {
             .section-banner-content h3 {
-                font-size: 1.6rem;
+                font-size: 2.8rem;
             }
         }
 
         .section-banner-content p {
-            font-size: 0.9rem;
-            opacity: 0.95;
+            font-size: 1.05rem;
+            font-weight: 400;
+            opacity: 0.8;
+            line-height: 1.5;
         }
 
         @media (min-width: 768px) {
             .section-banner-content p {
-                font-size: 1rem;
+                font-size: 1.2rem;
             }
         }
 
-        /* Registros Section - BBVA Blue (trabajo para el cliente) */
+        /* Registros Section - BBVA Blue */
         .section-registros {
-            background: linear-gradient(135deg, var(--bbva-blue-light) 0%, var(--bbva-blue) 100%);
-            color: white;
-            border-left: 6px solid var(--sodexo-pink-soft);
+            border-color: var(--bbva-blue-light);
         }
 
-        /* Consultas Section - Sodexo Pink Soft (herramientas Sodexo) */
+        .section-registros .section-banner-icon {
+            color: var(--bbva-blue-light);
+        }
+
+        .section-registros .section-banner-content h3 {
+            color: var(--bbva-blue);
+            background: linear-gradient(135deg, var(--bbva-blue) 0%, var(--bbva-blue-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-registros .section-banner-content p {
+            color: var(--text-secondary);
+        }
+
+        /* Consultas Section - Sodexo Pink */
         .section-consultas {
-            background: linear-gradient(135deg, var(--sodexo-pink-soft) 0%, var(--sodexo-pink) 100%);
-            color: white;
-            border-left: 6px solid var(--bbva-blue);
+            border-color: var(--sodexo-pink-soft);
+        }
+
+        .section-consultas .section-banner-icon {
+            color: var(--sodexo-pink-soft);
+        }
+
+        .section-consultas .section-banner-content h3 {
+            color: var(--sodexo-pink);
+            background: linear-gradient(135deg, var(--sodexo-pink) 0%, var(--sodexo-pink-soft) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-consultas .section-banner-content p {
+            color: var(--text-secondary);
         }
 
         /* Visual separator between sections */
         .section-divider {
-            margin: 3rem 0;
-            height: 2px;
-            background: linear-gradient(90deg, transparent 0%, var(--border) 20%, var(--border) 80%, transparent 100%);
+            margin: 4rem 0;
+            height: 1px;
+            background: var(--border);
+            position: relative;
+        }
+
+        .section-divider::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .section-divider::after {
+            content: '• • •';
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            letter-spacing: 0.5rem;
+            padding-left: 0.5rem;
         }
 
         @media (min-width: 768px) {
             .section-divider {
-                margin: 4rem 0;
+                margin: 5rem 0;
+            }
+        }
+
+        /* Section backgrounds for better visual separation */
+        .section-registros-wrapper {
+            background: linear-gradient(to bottom, transparent 0%, rgba(26, 123, 196, 0.02) 50%, transparent 100%);
+            padding: 2rem 0;
+            margin: 0 -1rem;
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+
+        .section-consultas-wrapper {
+            background: linear-gradient(to bottom, transparent 0%, rgba(230, 82, 141, 0.02) 50%, transparent 100%);
+            padding: 2rem 0;
+            margin: 0 -1rem;
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+
+        @media (min-width: 768px) {
+            .section-registros-wrapper,
+            .section-consultas-wrapper {
+                margin: 0 -2rem;
+                padding-left: 2rem;
+                padding-right: 2rem;
             }
         }
 
@@ -503,7 +596,6 @@
         .form-card:nth-child(7) { animation-delay: 1.1s; }
         .form-card:nth-child(8) { animation-delay: 1.2s; }
         .form-card:nth-child(9) { animation-delay: 1.3s; }
-        .form-card:nth-child(10) { animation-delay: 1.4s; }
 
         .form-card::before {
             content: '';
@@ -859,15 +951,16 @@
             <p style="margin-top: 1rem; font-weight: 600; font-size: 1.05rem; opacity: 0.95; letter-spacing: 0.5px;">✨ Somos agentes de servicio SODEXO</p>
         </div>
 
-        <div class="section-banner section-registros">
-            <div class="section-banner-icon">📝</div>
-            <div class="section-banner-content">
-                <h3>Registros y Formularios</h3>
-                <p>Completa los registros necesarios para tus operaciones diarias</p>
+        <div class="section-registros-wrapper">
+            <div class="section-banner section-registros">
+                <div class="section-banner-icon">📝</div>
+                <div class="section-banner-content">
+                    <h3>Registros y Formularios</h3>
+                    <p>Completa los registros necesarios para tus operaciones diarias</p>
+                </div>
             </div>
-        </div>
 
-        <div class="forms-grid">
+            <div class="forms-grid">
             <!-- Card 1: Control de Movilidades -->
             <div class="form-card">
                 <div class="card-icon">🚗</div>
@@ -900,15 +993,7 @@
                 <a href="#" class="card-button" onclick="openForm('incidencias')">Acceder al formulario</a>
             </div>
 
-            <!-- Card 5: Evaluación de Desempeño -->
-            <div class="form-card">
-                <div class="card-icon">📊</div>
-                <h3 class="card-title">Evaluación de Desempeño</h3>
-                <p class="card-description">Evalúa el desempeño del personal de limpieza asignado a tu zona de supervisión.</p>
-                <a href="#" class="card-button" onclick="openForm('evaluacion')">Acceder al formulario</a>
-            </div>
-
-            <!-- Card 6: Solicitud de Materiales -->
+            <!-- Card 5: Solicitud de Materiales -->
             <div class="form-card">
                 <div class="card-icon">📦</div>
                 <h3 class="card-title">Solicitud de Materiales</h3>
@@ -916,27 +1001,29 @@
                 <a href="#" class="card-button" onclick="openForm('materiales')">Acceder al formulario</a>
             </div>
 
-            <!-- Card 7: Solicitud de Uniformes -->
+            <!-- Card 6: Solicitud de Uniformes -->
             <div class="form-card">
                 <div class="card-icon">👔</div>
                 <h3 class="card-title">Solicitud de Uniformes</h3>
                 <p class="card-description">Solicita uniformes para personal nuevo o renovación de uniformes para personal antiguo.</p>
                 <a href="#" class="card-button" onclick="openForm('uniformes')">Acceder al formulario</a>
             </div>
+            </div>
         </div>
 
         <div class="section-divider"></div>
 
-        <div class="section-banner section-consultas">
-            <div class="section-banner-icon">📂</div>
-            <div class="section-banner-content">
-                <h3>Consultas y Gestión</h3>
-                <p>Información y herramientas para la supervisión de tu equipo</p>
+        <div class="section-consultas-wrapper">
+            <div class="section-banner section-consultas">
+                <div class="section-banner-icon">📂</div>
+                <div class="section-banner-content">
+                    <h3>Consultas y Gestión</h3>
+                    <p>Información y herramientas para la supervisión de tu equipo</p>
+                </div>
             </div>
-        </div>
 
-        <div class="forms-grid">
-            <!-- Card 8: Directorio Telefónico -->
+            <div class="forms-grid">
+            <!-- Card 7: Directorio Telefónico -->
             <div class="form-card">
                 <div class="card-icon">📞</div>
                 <h3 class="card-title">Directorio Telefónico</h3>
@@ -944,7 +1031,7 @@
                 <a href="#" class="card-button" onclick="openForm('directorio')">Acceder al directorio</a>
             </div>
 
-            <!-- Card 9: Boletas de Pago -->
+            <!-- Card 8: Boletas de Pago -->
             <div class="form-card">
                 <div class="card-icon">💰</div>
                 <h3 class="card-title">Revisa tus Boletas de Pago</h3>
@@ -952,12 +1039,13 @@
                 <a href="#" class="card-button" onclick="openForm('boletas')">Ver mis boletas</a>
             </div>
 
-            <!-- Card 10: Control de Vacaciones -->
+            <!-- Card 9: Control de Vacaciones -->
             <div class="form-card">
                 <div class="card-icon">🏖️</div>
                 <h3 class="card-title">Cumplimiento de Vacaciones</h3>
                 <p class="card-description">Consulta el estado de vacaciones de los auxiliares a tu cargo: pendientes, programadas y tomadas.</p>
                 <a href="#" class="card-button" onclick="openForm('vacaciones')">Ver vacaciones</a>
+            </div>
             </div>
         </div>
 
@@ -995,7 +1083,6 @@
             contratacion: 'https://forms.office.com/e/pGYtpsA5hz',
             supervision: 'TU_URL_FORMS_SUPERVISION',
             incidencias: 'TU_URL_FORMS_INCIDENCIAS',
-            evaluacion: 'TU_URL_FORMS_EVALUACION',
             materiales: 'TU_URL_FORMS_MATERIALES',
             uniformes: 'https://forms.office.com/e/B6GUxRs1Qc',
             directorio: 'TU_URL_DIRECTORIO_TELEFONICO',
