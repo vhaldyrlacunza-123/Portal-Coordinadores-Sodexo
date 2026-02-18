@@ -415,6 +415,7 @@
         .form-card:nth-child(6) { animation-delay: 1s; }
         .form-card:nth-child(7) { animation-delay: 1.1s; }
         .form-card:nth-child(8) { animation-delay: 1.2s; }
+        .form-card:nth-child(9) { animation-delay: 1.3s; }
 
         .form-card::before {
             content: '';
@@ -839,6 +840,14 @@
                 <p class="card-description">Consulta los teléfonos de contacto de los auxiliares de limpieza asignados a tu zona.</p>
                 <a href="#" class="card-button" onclick="openForm('directorio')">Acceder al directorio</a>
             </div>
+
+            <!-- Card 9: Boletas de Pago -->
+            <div class="form-card">
+                <div class="card-icon">💰</div>
+                <h3 class="card-title">Revisa tus Boletas de Pago</h3>
+                <p class="card-description">Accede con tu correo personal registrado en Sodexo. Primera vez: usa "Olvidé mi contraseña".</p>
+                <a href="#" class="card-button" onclick="openForm('boletas')">Ver mis boletas</a>
+            </div>
         </div>
 
         <section class="resources-section">
@@ -857,8 +866,8 @@
                     <p>Supervisores, almacén, RR.HH. y contactos BBVA</p>
                 </div>
                 <div class="resource-item">
-                    <h4>🧪 Fichas Técnicas de Productos</h4>
-                    <p>Dosificación y uso seguro de insumos químicos</p>
+                    <h4>💡 Ayuda: Acceso a Boletas de Pago</h4>
+                    <p>1️⃣ Ingresa con tu correo personal. 2️⃣ Primera vez: "Olvidé contraseña". 3️⃣ Ve a "Descargar Documentos"</p>
                 </div>
             </div>
         </section>
@@ -878,7 +887,8 @@
             evaluacion: 'TU_URL_FORMS_EVALUACION',
             materiales: 'TU_URL_FORMS_MATERIALES',
             uniformes: 'https://forms.office.com/e/B6GUxRs1Qc',
-            directorio: 'TU_URL_DIRECTORIO_TELEFONICO'
+            directorio: 'TU_URL_DIRECTORIO_TELEFONICO',
+            boletas: 'https://rhp.softlandcapitalhumano.com/LogIn/LogOn?ReturnUrl=%2f'
         };
 
         function openForm(formType) {
