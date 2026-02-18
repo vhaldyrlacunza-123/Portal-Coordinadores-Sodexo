@@ -596,6 +596,7 @@
         .form-card:nth-child(7) { animation-delay: 1.1s; }
         .form-card:nth-child(8) { animation-delay: 1.2s; }
         .form-card:nth-child(9) { animation-delay: 1.3s; }
+        .form-card:nth-child(10) { animation-delay: 1.4s; }
 
         .form-card::before {
             content: '';
@@ -664,6 +665,16 @@
                 margin-bottom: 1.5rem;
                 font-size: 2rem;
             }
+        }
+
+        /* Special styling for fumigation icon */
+        .fumigation-icon {
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%) !important;
+            filter: drop-shadow(0 4px 8px rgba(255, 165, 0, 0.3));
+        }
+
+        .fumigation-icon:hover {
+            filter: drop-shadow(0 6px 12px rgba(255, 165, 0, 0.4));
         }
 
         .card-title {
@@ -1046,6 +1057,14 @@
                 <p class="card-description">Consulta el estado de vacaciones de los auxiliares a tu cargo: pendientes, programadas y tomadas.</p>
                 <a href="#" class="card-button" onclick="openForm('vacaciones')">Ver vacaciones</a>
             </div>
+
+            <!-- Card 10: Certificados de Fumigación -->
+            <div class="form-card">
+                <div class="card-icon fumigation-icon">🦟</div>
+                <h3 class="card-title">Certificados de Fumigación</h3>
+                <p class="card-description">Visualiza los certificados de fumigación vigentes de las oficinas y agencias BBVA asignadas.</p>
+                <a href="#" class="card-button" onclick="openForm('fumigacion')">Ver certificados</a>
+            </div>
             </div>
         </div>
 
@@ -1087,7 +1106,8 @@
             uniformes: 'https://forms.office.com/e/B6GUxRs1Qc',
             directorio: 'TU_URL_DIRECTORIO_TELEFONICO',
             boletas: 'https://rhp.softlandcapitalhumano.com/LogIn/LogOn?ReturnUrl=%2f',
-            vacaciones: 'TU_URL_CONTROL_VACACIONES'
+            vacaciones: 'TU_URL_CONTROL_VACACIONES',
+            fumigacion: 'TU_URL_CERTIFICADOS_FUMIGACION'
         };
 
         function openForm(formType) {
