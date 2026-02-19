@@ -684,6 +684,10 @@
             color: var(--primary);
             margin-bottom: 0.65rem;
             line-height: 1.3;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
         }
 
         @media (min-width: 768px) {
@@ -691,6 +695,44 @@
                 font-size: 1.4rem;
                 margin-bottom: 0.75rem;
             }
+        }
+
+        /* Status badges */
+        .badge {
+            font-size: 0.7rem;
+            padding: 0.25rem 0.6rem;
+            border-radius: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-active {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            box-shadow: 0 2px 4px rgba(16, 185, 129, 0.3);
+        }
+
+        .badge-soon {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+            box-shadow: 0 2px 4px rgba(245, 158, 11, 0.3);
+        }
+
+        /* Disabled card styling */
+        .form-card-disabled {
+            opacity: 0.7;
+        }
+
+        .form-card-disabled .card-button {
+            background: linear-gradient(135deg, #9ca3af 0%, #6b7280 100%);
+            cursor: not-allowed;
+            box-shadow: 0 2px 6px rgba(156, 163, 175, 0.2);
+        }
+
+        .form-card-disabled .card-button:hover {
+            transform: none;
+            box-shadow: 0 2px 6px rgba(156, 163, 175, 0.2);
         }
 
         .card-description {
@@ -972,52 +1014,63 @@
             </div>
 
             <div class="forms-grid">
-            <!-- Card 1: Control de Movilidades -->
+            <!-- ACTIVOS PRIMERO -->
+            
+            <!-- Card 1: Control de Movilidades - ACTIVO -->
             <div class="form-card">
                 <div class="card-icon">🚗</div>
-                <h3 class="card-title">Control de Movilidades</h3>
+                <h3 class="card-title">
+                    Control de Movilidades
+                    <span class="badge badge-active">Activo</span>
+                </h3>
                 <p class="card-description">Registra gastos de transporte para traslados entre agencias BBVA y sedes operativas.</p>
                 <a href="#" class="card-button" onclick="openForm('movilidades')">Acceder al formulario</a>
             </div>
 
-            <!-- Card 2: Contratación de Personal -->
+            <!-- Card 2: Contratación de Personal - ACTIVO -->
             <div class="form-card">
                 <div class="card-icon">👥</div>
-                <h3 class="card-title">Contratación de Personal</h3>
+                <h3 class="card-title">
+                    Contratación de Personal
+                    <span class="badge badge-active">Activo</span>
+                </h3>
                 <p class="card-description">Solicita personal de limpieza temporal ante ausencias o incremento de carga operativa.</p>
                 <a href="#" class="card-button" onclick="openForm('contratacion')">Acceder al formulario</a>
             </div>
 
-            <!-- Card 3: Checklist de Supervisión -->
-            <div class="form-card">
-                <div class="card-icon">✓</div>
-                <h3 class="card-title">Checklist de Supervisión</h3>
-                <p class="card-description">Verifica estándares de limpieza, uso de EPPs y cumplimiento de protocolos en agencias.</p>
-                <a href="#" class="card-button" onclick="openForm('supervision')">Acceder al formulario</a>
-            </div>
-
-            <!-- Card 4: Reporte de Incidencias -->
-            <div class="form-card">
-                <div class="card-icon">⚠️</div>
-                <h3 class="card-title">Reporte de Incidencias</h3>
-                <p class="card-description">Documenta ausencias, fallas de equipos, falta de insumos o cualquier eventualidad operativa.</p>
-                <a href="#" class="card-button" onclick="openForm('incidencias')">Acceder al formulario</a>
-            </div>
-
-            <!-- Card 5: Solicitud de Materiales -->
-            <div class="form-card">
-                <div class="card-icon">📦</div>
-                <h3 class="card-title">Solicitud de Materiales</h3>
-                <p class="card-description">Solicita productos de limpieza, EPPs, equipos y consumibles para tus operaciones.</p>
-                <a href="#" class="card-button" onclick="openForm('materiales')">Acceder al formulario</a>
-            </div>
-
-            <!-- Card 6: Solicitud de Uniformes -->
+            <!-- Card 3: Solicitud de Uniformes - ACTIVO -->
             <div class="form-card">
                 <div class="card-icon">👔</div>
-                <h3 class="card-title">Solicitud de Uniformes</h3>
+                <h3 class="card-title">
+                    Solicitud de Uniformes
+                    <span class="badge badge-active">Activo</span>
+                </h3>
                 <p class="card-description">Solicita uniformes para personal nuevo o renovación de uniformes para personal antiguo.</p>
                 <a href="#" class="card-button" onclick="openForm('uniformes')">Acceder al formulario</a>
+            </div>
+
+            <!-- PRÓXIMAMENTE -->
+
+            <!-- Card 4: Checklist de Supervisión - PRÓXIMAMENTE -->
+            <div class="form-card form-card-disabled">
+                <div class="card-icon">✓</div>
+                <h3 class="card-title">
+                    Checklist de Supervisión
+                    <span class="badge badge-soon">Próximamente</span>
+                </h3>
+                <p class="card-description">Verifica estándares de limpieza, uso de EPPs y cumplimiento de protocolos en agencias.</p>
+                <a href="#" class="card-button" onclick="return false;">Próximamente</a>
+            </div>
+
+            <!-- Card 5: Reporte de Incidencias - PRÓXIMAMENTE -->
+            <div class="form-card form-card-disabled">
+                <div class="card-icon">⚠️</div>
+                <h3 class="card-title">
+                    Reporte de Incidencias
+                    <span class="badge badge-soon">Próximamente</span>
+                </h3>
+                <p class="card-description">Documenta ausencias, fallas de equipos, falta de insumos o cualquier eventualidad operativa.</p>
+                <a href="#" class="card-button" onclick="return false;">Próximamente</a>
             </div>
             </div>
         </div>
@@ -1034,36 +1087,52 @@
             </div>
 
             <div class="forms-grid">
-            <!-- Card 7: Directorio Telefónico -->
-            <div class="form-card">
-                <div class="card-icon">📞</div>
-                <h3 class="card-title">Directorio Telefónico</h3>
-                <p class="card-description">Consulta los teléfonos de contacto de los auxiliares de limpieza asignados a tu zona.</p>
-                <a href="#" class="card-button" onclick="openForm('directorio')">Acceder al directorio</a>
-            </div>
-
-            <!-- Card 8: Boletas de Pago -->
+            <!-- ACTIVOS PRIMERO -->
+            
+            <!-- Card 6: Boletas de Pago - ACTIVO -->
             <div class="form-card">
                 <div class="card-icon">💰</div>
-                <h3 class="card-title">Revisa tus Boletas de Pago</h3>
+                <h3 class="card-title">
+                    Revisa tus Boletas de Pago
+                    <span class="badge badge-active">Activo</span>
+                </h3>
                 <p class="card-description">Accede con tu correo personal registrado en Sodexo. Primera vez: usa "Olvidé mi contraseña".</p>
                 <a href="#" class="card-button" onclick="openForm('boletas')">Ver mis boletas</a>
             </div>
 
-            <!-- Card 9: Control de Vacaciones -->
-            <div class="form-card">
-                <div class="card-icon">🏖️</div>
-                <h3 class="card-title">Cumplimiento de Vacaciones</h3>
-                <p class="card-description">Consulta el estado de vacaciones de los auxiliares a tu cargo: pendientes, programadas y tomadas.</p>
-                <a href="#" class="card-button" onclick="openForm('vacaciones')">Ver vacaciones</a>
+            <!-- PRÓXIMAMENTE -->
+
+            <!-- Card 7: Directorio Telefónico - PRÓXIMAMENTE -->
+            <div class="form-card form-card-disabled">
+                <div class="card-icon">📞</div>
+                <h3 class="card-title">
+                    Directorio Telefónico
+                    <span class="badge badge-soon">Próximamente</span>
+                </h3>
+                <p class="card-description">Consulta los teléfonos de contacto de los auxiliares de limpieza asignados a tu zona.</p>
+                <a href="#" class="card-button" onclick="return false;">Próximamente</a>
             </div>
 
-            <!-- Card 10: Certificados de Fumigación -->
-            <div class="form-card">
+            <!-- Card 8: Cumplimiento de Vacaciones - PRÓXIMAMENTE -->
+            <div class="form-card form-card-disabled">
+                <div class="card-icon">🏖️</div>
+                <h3 class="card-title">
+                    Cumplimiento de Vacaciones
+                    <span class="badge badge-soon">Próximamente</span>
+                </h3>
+                <p class="card-description">Consulta el estado de vacaciones de los auxiliares a tu cargo: pendientes, programadas y tomadas.</p>
+                <a href="#" class="card-button" onclick="return false;">Próximamente</a>
+            </div>
+
+            <!-- Card 9: Certificados de Fumigación - PRÓXIMAMENTE -->
+            <div class="form-card form-card-disabled">
                 <div class="card-icon fumigation-icon">🦟</div>
-                <h3 class="card-title">Certificados de Fumigación</h3>
+                <h3 class="card-title">
+                    Certificados de Fumigación
+                    <span class="badge badge-soon">Próximamente</span>
+                </h3>
                 <p class="card-description">Visualiza los certificados de fumigación vigentes de las oficinas y agencias BBVA asignadas.</p>
-                <a href="#" class="card-button" onclick="openForm('fumigacion')">Ver certificados</a>
+                <a href="#" class="card-button" onclick="return false;">Próximamente</a>
             </div>
             </div>
         </div>
@@ -1112,7 +1181,7 @@
 
         function openForm(formType) {
             const url = formUrls[formType];
-            if (url && url !== 'TU_URL_FORMS_' + formType.toUpperCase()) {
+            if (url && !url.startsWith('TU_URL_')) {
                 window.open(url, '_blank');
             } else {
                 alert('Por favor, configura la URL de este formulario en el código.');
