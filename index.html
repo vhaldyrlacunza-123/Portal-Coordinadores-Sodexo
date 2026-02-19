@@ -476,6 +476,53 @@
             color: var(--text-secondary);
         }
 
+        /* Collapsible sections for mobile */
+        .section-collapsible {
+            position: relative;
+        }
+
+        .section-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .section-toggle-icon {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+            color: var(--primary);
+        }
+
+        @media (min-width: 768px) {
+            .section-toggle {
+                cursor: default;
+            }
+            
+            .section-toggle-icon {
+                display: none;
+            }
+        }
+
+        .section-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .section-content.active {
+            max-height: 5000px;
+        }
+
+        @media (min-width: 768px) {
+            .section-content {
+                max-height: none !important;
+                overflow: visible;
+            }
+        }
+
         /* Visual separator between sections */
         .section-divider {
             margin: 4rem 0;
@@ -1004,15 +1051,17 @@
             <p style="margin-top: 1rem; font-weight: 600; font-size: 1.05rem; opacity: 0.95; letter-spacing: 0.5px;">✨ Somos agentes de servicio SODEXO</p>
         </div>
 
-        <div class="section-registros-wrapper">
-            <div class="section-banner section-registros">
+        <div class="section-registros-wrapper section-collapsible">
+            <div class="section-banner section-registros section-toggle" onclick="toggleSection('registros')">
                 <div class="section-banner-icon">📝</div>
                 <div class="section-banner-content">
                     <h3>Registros y Formularios</h3>
                     <p>Completa los registros necesarios para tus operaciones diarias</p>
                 </div>
+                <span class="section-toggle-icon" id="toggle-registros">▼</span>
             </div>
 
+            <div class="section-content active" id="content-registros">
             <div class="forms-grid">
             <!-- ACTIVOS PRIMERO -->
             
@@ -1073,19 +1122,22 @@
                 <a href="#" class="card-button" onclick="return false;">Próximamente</a>
             </div>
             </div>
+            </div>
         </div>
 
         <div class="section-divider"></div>
 
-        <div class="section-consultas-wrapper">
-            <div class="section-banner section-consultas">
+        <div class="section-consultas-wrapper section-collapsible">
+            <div class="section-banner section-consultas section-toggle" onclick="toggleSection('consultas')">
                 <div class="section-banner-icon">📂</div>
                 <div class="section-banner-content">
                     <h3>Consultas y Gestión</h3>
                     <p>Información y herramientas para la supervisión de tu equipo</p>
                 </div>
+                <span class="section-toggle-icon" id="toggle-consultas">▼</span>
             </div>
 
+            <div class="section-content active" id="content-consultas">
             <div class="forms-grid">
             <!-- ACTIVOS PRIMERO -->
             
@@ -1102,7 +1154,18 @@
 
             <!-- PRÓXIMAMENTE -->
 
-            <!-- Card 7: Directorio Telefónico - PRÓXIMAMENTE -->
+            <!-- Card 7: Capacitaciones - PRÓXIMAMENTE -->
+            <div class="form-card form-card-disabled">
+                <div class="card-icon">📚</div>
+                <h3 class="card-title">
+                    Capacitaciones
+                    <span class="badge badge-soon">Próximamente</span>
+                </h3>
+                <p class="card-description">Visualiza el status de capacitaciones de los auxiliares a tu cargo y el cumplimiento de tu zona.</p>
+                <a href="#" class="card-button" onclick="return false;">Próximamente</a>
+            </div>
+
+            <!-- Card 8: Directorio Telefónico - PRÓXIMAMENTE -->
             <div class="form-card form-card-disabled">
                 <div class="card-icon">📞</div>
                 <h3 class="card-title">
@@ -1124,7 +1187,7 @@
                 <a href="#" class="card-button" onclick="return false;">Próximamente</a>
             </div>
 
-            <!-- Card 9: Certificados de Fumigación - PRÓXIMAMENTE -->
+            <!-- Card 10: Certificados de Fumigación - PRÓXIMAMENTE -->
             <div class="form-card form-card-disabled">
                 <div class="card-icon fumigation-icon">🦟</div>
                 <h3 class="card-title">
@@ -1133,6 +1196,7 @@
                 </h3>
                 <p class="card-description">Visualiza los certificados de fumigación vigentes de las oficinas y agencias BBVA asignadas.</p>
                 <a href="#" class="card-button" onclick="return false;">Próximamente</a>
+            </div>
             </div>
             </div>
         </div>
@@ -1171,10 +1235,10 @@
             contratacion: 'https://forms.office.com/e/pGYtpsA5hz',
             supervision: 'TU_URL_FORMS_SUPERVISION',
             incidencias: 'TU_URL_FORMS_INCIDENCIAS',
-            materiales: 'TU_URL_FORMS_MATERIALES',
             uniformes: 'https://forms.office.com/e/B6GUxRs1Qc',
             directorio: 'TU_URL_DIRECTORIO_TELEFONICO',
             boletas: 'https://rhp.softlandcapitalhumano.com/LogIn/LogOn?ReturnUrl=%2f',
+            capacitaciones: 'TU_URL_CAPACITACIONES',
             vacaciones: 'TU_URL_CONTROL_VACACIONES',
             fumigacion: 'TU_URL_CERTIFICADOS_FUMIGACION'
         };
@@ -1187,6 +1251,32 @@
                 alert('Por favor, configura la URL de este formulario en el código.');
             }
         }
+
+        // Toggle sections for mobile (accordion)
+        function toggleSection(sectionName) {
+            // Only work on mobile
+            if (window.innerWidth >= 768) return;
+            
+            const content = document.getElementById('content-' + sectionName);
+            const icon = document.getElementById('toggle-' + sectionName);
+            
+            if (content.classList.contains('active')) {
+                content.classList.remove('active');
+                icon.style.transform = 'rotate(-90deg)';
+            } else {
+                content.classList.add('active');
+                icon.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        // Initialize sections as open on load
+        document.addEventListener('DOMContentLoaded', function() {
+            const registrosContent = document.getElementById('content-registros');
+            const consultasContent = document.getElementById('content-consultas');
+            
+            if (registrosContent) registrosContent.classList.add('active');
+            if (consultasContent) consultasContent.classList.add('active');
+        });
 
         // Personalización opcional del nombre del usuario
         // Puedes obtener esto de Active Directory o configurarlo manualmente
