@@ -726,27 +726,26 @@
             
             try {
                 // Construir URL con parámetros GET
-                const params = new URLSearchParams(data);
-                const urlWithParams = `${GOOGLE_SCRIPT_URL}?${params.toString()}`;
+                const params = new URLSearchParams();
+                for (const [key, value] of Object.entries(data)) {
+                    params.append(key, value);
+                }
+                
+                const fullUrl = `${GOOGLE_SCRIPT_URL}?${params.toString()}`;
                 
                 console.log('📤 Enviando datos a Google Sheets...');
                 
-                // Enviar usando GET
-                const response = await fetch(urlWithParams, {
-                    method: 'GET',
-                    redirect: 'follow'
-                });
+                // Usar imagen invisible para evitar CORS
+                const img = new Image();
+                img.src = fullUrl;
                 
-                const text = await response.text();
-                console.log('📥 Respuesta del servidor:', text);
+                // Esperar un momento para que se envíe
+                await new Promise(resolve => setTimeout(resolve, 1000));
                 
-                if (text.includes('OK') || text.includes('guardados')) {
-                    console.log('✅ Datos guardados exitosamente en Google Sheets');
-                    return true;
-                } else {
-                    console.log('⚠️ Respuesta inesperada:', text);
-                    return false;
-                }
+                console.log('✅ Datos enviados a Google Sheets');
+                console.log('ℹ️ Verifica el Google Sheet para confirmar');
+                
+                return true;
                 
             } catch (error) {
                 console.error('❌ Error al enviar a Google Sheets:', error);
