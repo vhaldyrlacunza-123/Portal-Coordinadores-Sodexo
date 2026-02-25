@@ -734,16 +734,22 @@
                 const fullUrl = `${GOOGLE_SCRIPT_URL}?${params.toString()}`;
                 
                 console.log('📤 Enviando datos a Google Sheets...');
+                console.log('🔗 URL:', fullUrl);
                 
-                // Usar imagen invisible para evitar CORS
-                const img = new Image();
-                img.src = fullUrl;
+                // Crear iframe oculto para enviar sin CORS
+                const iframe = document.createElement('iframe');
+                iframe.style.display = 'none';
+                iframe.src = fullUrl;
+                document.body.appendChild(iframe);
                 
-                // Esperar un momento para que se envíe
-                await new Promise(resolve => setTimeout(resolve, 1000));
+                // Esperar que se envíe
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                // Limpiar
+                document.body.removeChild(iframe);
                 
                 console.log('✅ Datos enviados a Google Sheets');
-                console.log('ℹ️ Verifica el Google Sheet para confirmar');
+                console.log('ℹ️ Verifica el Google Sheet en unos segundos');
                 
                 return true;
                 
