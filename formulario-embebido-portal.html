@@ -578,61 +578,51 @@
 
         <!-- SUCCESS SECTION -->
         <div class="success-section" id="successSection">
-            <div class="success-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="20 6 9 17 4 12"></polyline>
-                </svg>
+            <div class="success-message" style="margin-bottom: 2rem;">
+                <h2 style="color: #f59e0b; font-size: 1.4rem;">⚠️ Acción Requerida</h2>
+                <p style="font-size: 1rem;">Completa los siguientes pasos para finalizar</p>
             </div>
 
-            <div class="success-message">
-                <h2>¡Formulario Completado!</h2>
-                <p>Ahora completa los siguientes pasos</p>
-            </div>
-
-            <!-- BOTONES PRINCIPALES ARRIBA -->
+            <!-- BOTÓN GUARDAR PRIMERO Y DESTACADO -->
             <div style="margin-bottom: 2rem;">
-                <div class="action-buttons" style="margin-bottom: 1rem;">
-                    <button class="btn btn-copy" onclick="copyToClipboard()">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                <div style="background: #fef3c7; border: 3px solid #f59e0b; border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem;">
+                    <p style="font-size: 1rem; color: #92400e; font-weight: 700; margin-bottom: 1rem; text-align: center;">
+                        🔴 PASO 1: Guarda en el sistema
+                    </p>
+                    <button id="confirmSaveBtn" class="btn" onclick="confirmAndSave()" style="width: 100%; background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: white; box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4); font-size: 1.15rem; padding: 1.2rem; font-weight: 700;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 26px; height: 26px;">
+                            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                            <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                            <polyline points="7 3 7 8 15 8"></polyline>
                         </svg>
-                        Copiar Mensaje
+                        💾 GUARDAR EN SISTEMA
                     </button>
-                    <button class="btn btn-whatsapp" onclick="openWhatsApp()">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
-                        </svg>
-                        Abrir WhatsApp
-                    </button>
+                    <p id="saveStatus" style="margin-top: 1rem; font-size: 1rem; color: #059669; font-weight: 700; text-align: center; display: none;">
+                        ✅ ¡Guardado correctamente!
+                    </p>
                 </div>
 
-                <button id="confirmSaveBtn" class="btn" onclick="confirmAndSave()" style="width: 100%; background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3); font-size: 1.05rem;">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 24px; height: 24px;">
-                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
-                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
-                        <polyline points="7 3 7 8 15 8"></polyline>
-                    </svg>
-                    Guardar en Sistema
-                </button>
-                <p id="saveStatus" style="margin-top: 1rem; font-size: 0.9rem; color: #059669; font-weight: 600; text-align: center; display: none;">
-                    ✅ Registro guardado correctamente
-                </p>
-            </div>
-
-            <!-- INSTRUCCIONES -->
-            <div class="next-steps">
-                <h3>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M12 2v20M2 12h20"></path>
-                    </svg>
-                    Pasos a seguir:
-                </h3>
-                <ol>
-                    <li><strong>Copiar:</strong> Usa el botón "Copiar Mensaje"</li>
-                    <li><strong>WhatsApp:</strong> Envía al grupo del proveedor</li>
-                    <li><strong>Guardar:</strong> Haz clic en "Guardar en Sistema"</li>
-                </ol>
+                <!-- BOTONES WHATSAPP DESPUÉS -->
+                <div style="background: #f0f9ff; border: 2px solid #0284c7; border-radius: 12px; padding: 1.5rem;">
+                    <p style="font-size: 1rem; color: #075985; font-weight: 700; margin-bottom: 1rem; text-align: center;">
+                        📱 PASO 2: Envía por WhatsApp
+                    </p>
+                    <div class="action-buttons">
+                        <button class="btn btn-copy" onclick="copyToClipboard()">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                            Copiar Mensaje
+                        </button>
+                        <button class="btn btn-whatsapp" onclick="openWhatsApp()">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                            </svg>
+                            Abrir WhatsApp
+                        </button>
+                    </div>
+                </div>
             </div>
 
             <!-- MENSAJE WHATSAPP -->
