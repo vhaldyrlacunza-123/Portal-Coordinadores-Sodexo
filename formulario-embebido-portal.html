@@ -131,6 +131,10 @@
             gap: 1rem;
         }
 
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
         @media (max-width: 640px) {
             .form-row {
                 grid-template-columns: 1fr;
@@ -623,6 +627,23 @@
                 </button>
             </div>
 
+            <div style="margin: 1.5rem 0; padding: 1.5rem; background: #fef3c7; border-left: 4px solid #f59e0b; border-radius: 8px;">
+                <p style="font-size: 0.95rem; color: #92400e; margin-bottom: 1rem; line-height: 1.6;">
+                    <strong>⚠️ Paso Final:</strong> Para que tu solicitud quede registrada en el sistema, haz clic en el botón de abajo.
+                </p>
+                <button id="confirmSaveBtn" class="btn" onclick="confirmAndSave()" style="width: 100%; background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3); font-size: 1.05rem;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 24px; height: 24px;">
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+                    </svg>
+                    ✅ Confirmar y Guardar en Sistema
+                </button>
+                <p id="saveStatus" style="margin-top: 1rem; font-size: 0.9rem; color: #059669; font-weight: 600; text-align: center; display: none;">
+                    ✅ Registro guardado correctamente en el sistema
+                </p>
+            </div>
+
             <div class="secondary-buttons">
                 <button class="btn btn-secondary" onclick="newRequest()">← Nueva Solicitud</button>
                 <button class="btn btn-secondary" onclick="goBack()">Volver al Portal</button>
@@ -702,6 +723,7 @@
                 totalDias: document.getElementById('totalDias').value,
                 formaAbono: document.getElementById('formaAbono').value,
                 telefono: document.getElementById('telefono').value,
+                pagoDia: document.getElementById('pagoDia').value,
                 pagoTotal: document.getElementById('pagoTotal').value,
                 costoProveedorDia: document.getElementById('costoProveedorDia').value,
                 costoTotal: document.getElementById('costoTotal').value
@@ -710,54 +732,12 @@
             // Show loading
             document.getElementById('loadingOverlay').classList.add('show');
 
-            // Submit to Microsoft Forms (via iframe in background)
-            await submitToMicrosoftForms(formData);
-
-            // Hide loading after 2 seconds
+            // Hide loading and show success after 1.5 seconds
             setTimeout(() => {
                 document.getElementById('loadingOverlay').classList.remove('show');
                 showSuccessScreen();
-            }, 2000);
+            }, 1500);
         });
-
-        async function submitToMicrosoftForms(data) {
-            // URL del Google Apps Script - VERSIÓN 3 QUE FUNCIONA
-            const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwLwraghHA7_Mr-psfmmd64cPe1P5NV1dwJCMfg5BvDb51LDC4fwB3AUBJDZrVnBBu7zA/exec';
-            
-            try {
-                // Construir URL con parámetros GET
-                const params = new URLSearchParams();
-                for (const [key, value] of Object.entries(data)) {
-                    params.append(key, value);
-                }
-                
-                const fullUrl = `${GOOGLE_SCRIPT_URL}?${params.toString()}`;
-                
-                console.log('📤 Enviando datos a Google Sheets...');
-                console.log('🔗 URL:', fullUrl);
-                
-                // Crear iframe oculto para enviar sin CORS
-                const iframe = document.createElement('iframe');
-                iframe.style.display = 'none';
-                iframe.src = fullUrl;
-                document.body.appendChild(iframe);
-                
-                // Esperar que se envíe
-                await new Promise(resolve => setTimeout(resolve, 2000));
-                
-                // Limpiar
-                document.body.removeChild(iframe);
-                
-                console.log('✅ Datos enviados a Google Sheets');
-                console.log('ℹ️ Verifica el Google Sheet en unos segundos');
-                
-                return true;
-                
-            } catch (error) {
-                console.error('❌ Error al enviar a Google Sheets:', error);
-                return false;
-            }
-        }
 
         function showSuccessScreen() {
             document.getElementById('formSection').classList.add('hidden');
@@ -846,6 +826,32 @@ Costo proveedor S/. ${formData.costoTotal} + IGV`;
             } else {
                 window.open(`https://web.whatsapp.com/send?text=${encodedMessage}`, '_blank');
             }
+        }
+
+        function confirmAndSave() {
+            const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwLwraghHA7_Mr-psfmmd64cPe1P5NV1dwJCMfg5BvDb51LDC4fwB3AUBJDZrVnBBu7zA/exec';
+            
+            // Construir URL con parámetros
+            const params = new URLSearchParams();
+            for (const [key, value] of Object.entries(formData)) {
+                params.append(key, value);
+            }
+            
+            const fullUrl = `${GOOGLE_SCRIPT_URL}?${params.toString()}`;
+            
+            // Deshabilitar botón
+            const btn = document.getElementById('confirmSaveBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 24px; height: 24px; animation: spin 1s linear infinite;"><circle cx="12" cy="12" r="10"></circle></svg> Guardando...';
+            
+            // Abrir en nueva ventana
+            window.open(fullUrl, '_blank');
+            
+            // Mostrar confirmación después de 2 segundos
+            setTimeout(() => {
+                btn.style.display = 'none';
+                document.getElementById('saveStatus').style.display = 'block';
+            }, 2000);
         }
 
         function newRequest() {
