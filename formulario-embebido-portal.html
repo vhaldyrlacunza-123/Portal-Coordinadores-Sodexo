@@ -509,11 +509,14 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label><span class="number">7.</span> Fecha de INICIO <span class="required">*</span></label>
-                        <input type="date" id="fechaInicio" required>
+                        <input type="date" id="fechaInicio" required onchange="validateFechaFin()">
                     </div>
                     <div class="form-group">
                         <label><span class="number">8.</span> Fecha FIN <span class="required">*</span></label>
-                        <input type="date" id="fechaFin" required>
+                        <input type="date" id="fechaFin" required onchange="validateFechaFin()">
+                        <p class="helper-text" id="fechaError" style="color: #dc2626; display: none;">
+                            ⚠️ La fecha fin no puede ser anterior a la fecha de inicio
+                        </p>
                     </div>
                 </div>
 
@@ -629,9 +632,14 @@
 
             <div style="margin: 1.5rem 0; padding: 1.5rem; background: #fef3c7; border-left: 4px solid #f59e0b; border-radius: 8px;">
                 <p style="font-size: 0.95rem; color: #92400e; margin-bottom: 1rem; line-height: 1.6;">
-                    <strong>⚠️ Paso Final:</strong> Para que tu solicitud quede registrada en el sistema, haz clic en el botón de abajo.
+                    <strong>⚠️ IMPORTANTE - Sigue estos pasos en orden:</strong>
                 </p>
-                <button id="confirmSaveBtn" class="btn" onclick="confirmAndSave()" style="width: 100%; background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3); font-size: 1.05rem;">
+                <ol style="margin-left: 1.5rem; color: #92400e; font-size: 0.9rem; line-height: 1.8;">
+                    <li><strong>Primero:</strong> Copia el mensaje de WhatsApp (botón "Copiar Mensaje" arriba)</li>
+                    <li><strong>Segundo:</strong> Envía el mensaje al grupo de WhatsApp con el proveedor</li>
+                    <li><strong>Tercero:</strong> Vuelve aquí y haz clic en "Confirmar y Guardar" para registrar en el sistema</li>
+                </ol>
+                <button id="confirmSaveBtn" class="btn" onclick="confirmAndSave()" style="width: 100%; background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3); font-size: 1.05rem; margin-top: 1rem;">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 24px; height: 24px;">
                         <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
                         <polyline points="17 21 17 13 7 13 7 21"></polyline>
@@ -670,6 +678,31 @@
 
     <script>
         let formData = {};
+
+        // Validar que fecha fin no sea menor a fecha inicio
+        function validateFechaFin() {
+            const fechaInicio = document.getElementById('fechaInicio').value;
+            const fechaFin = document.getElementById('fechaFin').value;
+            const errorElement = document.getElementById('fechaError');
+            const fechaFinInput = document.getElementById('fechaFin');
+            
+            if (fechaInicio && fechaFin) {
+                const inicio = new Date(fechaInicio);
+                const fin = new Date(fechaFin);
+                
+                if (fin < inicio) {
+                    // Mostrar error
+                    errorElement.style.display = 'block';
+                    fechaFinInput.setCustomValidity('La fecha fin debe ser igual o posterior a la fecha inicio');
+                    fechaFinInput.style.borderColor = '#dc2626';
+                } else {
+                    // Ocultar error
+                    errorElement.style.display = 'none';
+                    fechaFinInput.setCustomValidity('');
+                    fechaFinInput.style.borderColor = '#e2e8f0';
+                }
+            }
+        }
 
         // Auto-calculate both totals automatically
         document.getElementById('totalDias').addEventListener('input', calculateTotals);
@@ -774,8 +807,10 @@ YAPE: ${formData.telefono}`;
             mensaje += `
 Días trabajados: ${formData.totalDias}
 Fecha: ${fechasTexto}
+Pago por día: S/. ${formData.pagoDia}
 Pago total al auxiliar: S/. ${formData.pagoTotal}
-Costo proveedor S/. ${formData.costoTotal} + IGV`;
+Tarifa proveedor/día: S/. ${formData.costoProveedorDia}
+Costo proveedor: S/. ${formData.costoTotal} + IGV`;
 
             return mensaje;
         }
