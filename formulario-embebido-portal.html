@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solicitud de Personal | Sodexo BBVA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #e8f2fb 0%, #d4e6f7 100%);
+            min-height: 100vh;
+            padding: 1rem;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0, 68, 129, 0.15);
+            overflow: hidden;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1A7BC4 0%, #004481 100%);
+            color: white;
+            padding: 2.5rem 2rem;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            font-size: 1rem;
+            opacity: 0.95;
+        }
+
+        /* Form Section */
+        .form-section {
+            padding: 2rem;
+            display: block;
+        }
+
+        .form-section.hidden {
+            display: none;
+        }
+
+        .form-intro {
+            background: #f8f9fc;
+            padding: 1.25rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            border-left: 4px solid #1A7BC4;
+        }
+
+        .form-intro p {
+            font-size: 0.9rem;
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        .form-group {
+            margin-bottom: 2rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #1a202c;
+            margin-bottom: 0.75rem;
+        }
+
+        .form-group label .required {
+            color: #E4003B;
+            margin-left: 0.25rem;
+        }
+
+        .form-group label .number {
+            color: #1A7BC4;
+            margin-right: 0.5rem;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #1A7BC4;
+            box-shadow: 0 0 0 3px rgba(26, 123, 196, 0.1);
+        }
+
+        .form-group input.calculated {
+            background: #f8f9fc;
+            cursor: not-allowed;
+            color: #64748b;
+        }
+
+        .helper-text {
+            font-size: 0.85rem;
+            color: #64748b;
+            margin-top: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        @media (max-width: 640px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .submit-button {
+            width: 100%;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #1A7BC4 0%, #004481 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(26, 123, 196, 0.3);
+            margin-top: 1rem;
+        }
+
+        .submit-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(26, 123, 196, 0.4);
+        }
+
+        .submit-button:active {
+            transform: scale(0.98);
+        }
+
+        .submit-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Success Section */
+        .success-section {
+            padding: 2rem;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .success-section.show {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+        }
+
+        .success-icon svg {
+            width: 40px;
+            height: 40px;
+            stroke: white;
+            stroke-width: 3;
+        }
+
+        .success-message {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .success-message h2 {
+            font-size: 1.5rem;
+            color: #1a202c;
+            margin-bottom: 0.5rem;
+        }
+
+        .success-message p {
+            font-size: 1rem;
+            color: #64748b;
+        }
+
+        .next-steps {
+            background: #f0f9ff;
+            border-left: 4px solid #0284c7;
+            padding: 1.25rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+
+        .next-steps h3 {
+            font-size: 1rem;
+            color: #075985;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .next-steps ol {
+            margin-left: 1.5rem;
+            color: #0c4a6e;
+            font-size: 0.9rem;
+            line-height: 1.8;
+        }
+
+        .whatsapp-box {
+            background: white;
+            border: 2px dashed #1A7BC4;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .whatsapp-label {
+            position: absolute;
+            top: -12px;
+            left: 16px;
+            background: white;
+            padding: 0 0.5rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #1A7BC4;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .whatsapp-content {
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.8;
+            color: #1a202c;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (min-width: 640px) {
+            .action-buttons {
+                flex-direction: row;
+            }
+        }
+
+        .btn {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .btn-copy {
+            background: linear-gradient(135deg, #E6528D 0%, #E4003B 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(230, 82, 141, 0.3);
+        }
+
+        .btn-copy:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(230, 82, 141, 0.4);
+        }
+
+        .btn-whatsapp {
+            background: #25D366;
+            color: white;
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+        }
+
+        .btn-whatsapp:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .secondary-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn-secondary {
+            flex: 1;
+            background: white;
+            color: #64748b;
+            border: 2px solid #e2e8f0;
+        }
+
+        .btn-secondary:hover {
+            border-color: #1A7BC4;
+            color: #1A7BC4;
+        }
+
+        .notification {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: #10b981;
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 8px 24px rgba(16, 185, 129, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            opacity: 0;
+            transform: translateY(100px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .notification.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Loading */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .loading-overlay.show {
+            display: flex;
+        }
+
+        .loading-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #e2e8f0;
+            border-top-color: #1A7BC4;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Solicitud de Personal Temporal</h1>
+            <p>Registro de contratación de personal externo por contingencia</p>
+        </div>
+
+        <!-- FORM SECTION -->
+        <div class="form-section" id="formSection">
+            <div class="form-intro">
+                <p><strong>📝 Importante:</strong> Al enviar este formulario, tus datos se guardarán automáticamente y recibirás el mensaje formateado para enviar por WhatsApp al proveedor.</p>
+            </div>
+
+            <form id="personnelForm">
+                <!-- 1. Coordinador -->
+                <div class="form-group">
+                    <label><span class="number">1.</span> Coordinador <span class="required">*</span></label>
+                    <select id="coordinador" required>
+                        <option value="">Selecciona tu nombre</option>
+                        <option value="Jonathan Chumacero">Jonathan Chumacero</option>
+                        <option value="Erick Tamara">Erick Tamara</option>
+                        <option value="Arturo Chuquiyuri">Arturo Chuquiyuri</option>
+                        <option value="María Vargas">María Vargas</option>
+                        <option value="Maria Portocarrero">Maria Portocarrero</option>
+                        <option value="Melissa Peralta">Melissa Peralta</option>
+                    </select>
+                </div>
+
+                <!-- 2. Oficina -->
+                <div class="form-group">
+                    <label><span class="number">2.</span> Oficina <span class="required">*</span></label>
+                    <input type="text" id="oficina" placeholder="Ej: OFICINA HUARAL" required>
+                </div>
+
+                <!-- 3 y 4. Auxiliar AUSENTE -->
+                <div class="form-group">
+                    <label><span class="number">3.</span> Nombre y Apellido del Auxiliar AUSENTE <span class="required">*</span></label>
+                    <input type="text" id="nombreAusente" placeholder="Ej: Juan Pérez López" required>
+                </div>
+
+                <div class="form-group">
+                    <label><span class="number">4.</span> DNI del Auxiliar AUSENTE <span class="required">*</span></label>
+                    <input type="text" id="dniAusente" placeholder="Ej: 12345678" maxlength="8" required>
+                </div>
+
+                <!-- 5. Motivo de AUSENCIA -->
+                <div class="form-group">
+                    <label><span class="number">5.</span> Motivo de AUSENCIA <span class="required">*</span></label>
+                    <select id="motivoAusencia" required>
+                        <option value="">Selecciona el motivo</option>
+                        <option value="Enfermedad">Enfermedad</option>
+                        <option value="Licencia">Licencia</option>
+                        <option value="Vacaciones">Vacaciones</option>
+                        <option value="Descanso médico">Descanso médico</option>
+                        <option value="Permiso personal">Permiso personal</option>
+                        <option value="Otros">Otros</option>
+                    </select>
+                </div>
+
+                <!-- 6. Proveedor -->
+                <div class="form-group">
+                    <label><span class="number">6.</span> Proveedor Requerido <span class="required">*</span></label>
+                    <input type="text" id="proveedor" list="proveedorList" placeholder="Escribe o selecciona" value="Solim" required>
+                    <datalist id="proveedorList">
+                        <option value="Solim">
+                        <option value="Publivisión">
+                    </datalist>
+                    <p class="helper-text">Puedes seleccionar o escribir un nuevo proveedor</p>
+                </div>
+
+                <!-- Auxiliar de REEMPLAZO -->
+                <div class="form-group">
+                    <label>Nombre del auxiliar de REEMPLAZO <span class="required">*</span></label>
+                    <input type="text" id="nombreReemplazo" placeholder="Ej: María Teresa Espinoza Maydana" required>
+                    <p class="helper-text">Esta persona cubrirá la ausencia</p>
+                </div>
+
+                <div class="form-group">
+                    <label>DNI del auxiliar de REEMPLAZO <span class="required">*</span></label>
+                    <input type="text" id="dniReemplazo" placeholder="Ej: 16012498" maxlength="8" required>
+                </div>
+
+                <!-- 7 y 8. Fechas -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label><span class="number">7.</span> Fecha de INICIO <span class="required">*</span></label>
+                        <input type="date" id="fechaInicio" required>
+                    </div>
+                    <div class="form-group">
+                        <label><span class="number">8.</span> Fecha FIN <span class="required">*</span></label>
+                        <input type="date" id="fechaFin" required>
+                    </div>
+                </div>
+
+                <!-- 9. Total de días -->
+                <div class="form-group">
+                    <label><span class="number">9.</span> Total de días laborado <span class="required">*</span></label>
+                    <input type="number" id="totalDias" placeholder="Ej: 2" min="1" required>
+                    <p class="helper-text">Número de días que trabajará el reemplazo</p>
+                </div>
+
+                <!-- Forma de Abono -->
+                <div class="form-group">
+                    <label>Forma de Abono del auxiliar de REEMPLAZO <span class="required">*</span></label>
+                    <select id="formaAbono" required>
+                        <option value="">Selecciona la forma de abono</option>
+                        <option value="YAPE" selected>YAPE</option>
+                        <option value="PLIN">PLIN</option>
+                        <option value="Transferencia">Transferencia</option>
+                        <option value="Efectivo">Efectivo</option>
+                    </select>
+                </div>
+
+                <!-- Teléfono -->
+                <div class="form-group">
+                    <label>Teléfono del auxiliar de REEMPLAZO</label>
+                    <input type="text" id="telefono" placeholder="Ej: 988192031" maxlength="9">
+                    <p class="helper-text">Opcional - Para el pago vía YAPE o PLIN</p>
+                </div>
+
+                <!-- Pagos - Cálculos automáticos optimizados -->
+                <div class="form-group">
+                    <label>Pago por día al auxiliar (S/) <span class="required">*</span></label>
+                    <input type="number" id="pagoDia" placeholder="Ej: 50.00" step="0.01" value="50.00" required>
+                    <p class="helper-text">Cuánto se le paga al auxiliar por cada día trabajado</p>
+                </div>
+
+                <div class="form-group">
+                    <label>Pago Total al Auxiliar de Reemplazo 💸 <span class="required">*</span></label>
+                    <input type="number" id="pagoTotal" class="calculated" readonly>
+                    <p class="helper-text">Se calcula automáticamente: <strong>Días × Pago/día</strong></p>
+                </div>
+
+                <!-- 10. Costo proveedor -->
+                <div class="form-group">
+                    <label>Costo proveedor por día (S/) <span class="required">*</span></label>
+                    <input type="number" id="costoProveedorDia" placeholder="Ej: 121.00" step="0.01" value="121.00" required>
+                    <p class="helper-text">Valores comunes: 109, 116, 121</p>
+                </div>
+
+                <div class="form-group">
+                    <label><span class="number">10.</span> Cobro total del Proveedor 💸 (sin IGV) <span class="required">*</span></label>
+                    <input type="number" id="costoTotal" class="calculated" readonly>
+                    <p class="helper-text">Se calcula automáticamente: <strong>Días × Costo proveedor/día</strong></p>
+                </div>
+
+                <button type="submit" class="submit-button">Enviar Solicitud</button>
+            </form>
+        </div>
+
+        <!-- SUCCESS SECTION -->
+        <div class="success-section" id="successSection">
+            <div class="success-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+            </div>
+
+            <div class="success-message">
+                <h2>¡Solicitud Enviada!</h2>
+                <p>Tu solicitud ha sido registrada correctamente</p>
+            </div>
+
+            <div class="next-steps">
+                <h3>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                    </svg>
+                    Siguiente paso: Envía a WhatsApp
+                </h3>
+                <ol>
+                    <li>Copia el mensaje de abajo</li>
+                    <li>Abre el grupo de WhatsApp con el proveedor</li>
+                    <li>Menciona a <strong>@Juan - proveedor SOLIM</strong></li>
+                    <li>Pega el mensaje y envía</li>
+                </ol>
+            </div>
+
+            <div class="whatsapp-box">
+                <span class="whatsapp-label">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                    </svg>
+                    Mensaje para WhatsApp
+                </span>
+                <div class="whatsapp-content" id="whatsappMessage"></div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn btn-copy" onclick="copyToClipboard()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                    Copiar Mensaje
+                </button>
+                <button class="btn btn-whatsapp" onclick="openWhatsApp()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                    </svg>
+                    Abrir WhatsApp
+                </button>
+            </div>
+
+            <div class="secondary-buttons">
+                <button class="btn btn-secondary" onclick="newRequest()">← Nueva Solicitud</button>
+                <button class="btn btn-secondary" onclick="goBack()">Volver al Portal</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <h3 style="color: #1a202c; margin-bottom: 0.5rem;">Enviando solicitud...</h3>
+            <p style="color: #64748b;">Por favor espera un momento</p>
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div class="notification" id="notification">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+        <span>¡Copiado al portapapeles!</span>
+    </div>
+
+    <script>
+        let formData = {};
+
+        // Auto-calculate both totals automatically
+        document.getElementById('totalDias').addEventListener('input', calculateTotals);
+        document.getElementById('pagoDia').addEventListener('input', calculateTotals);
+        document.getElementById('costoProveedorDia').addEventListener('input', calculateTotals);
+
+        function calculateTotals() {
+            const dias = parseFloat(document.getElementById('totalDias').value) || 0;
+            const pagoDia = parseFloat(document.getElementById('pagoDia').value) || 0;
+            const costoProveedorDia = parseFloat(document.getElementById('costoProveedorDia').value) || 0;
+            
+            // Calculate pagoTotal: días × pago por día
+            const pagoTotal = (dias * pagoDia).toFixed(2);
+            document.getElementById('pagoTotal').value = pagoTotal;
+            
+            // Calculate costoTotal: días × costo proveedor por día
+            const costoTotal = (dias * costoProveedorDia).toFixed(2);
+            document.getElementById('costoTotal').value = costoTotal;
+        }
+
+        // Validate DNI
+        document.getElementById('dniAusente').addEventListener('input', function(e) {
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
+
+        document.getElementById('dniReemplazo').addEventListener('input', function(e) {
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
+
+        // Validate phone
+        document.getElementById('telefono').addEventListener('input', function(e) {
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
+
+        // Form submission
+        document.getElementById('personnelForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            // Collect form data
+            formData = {
+                coordinador: document.getElementById('coordinador').value,
+                oficina: document.getElementById('oficina').value,
+                nombreAusente: document.getElementById('nombreAusente').value,
+                dniAusente: document.getElementById('dniAusente').value,
+                motivoAusencia: document.getElementById('motivoAusencia').value,
+                proveedor: document.getElementById('proveedor').value,
+                nombreReemplazo: document.getElementById('nombreReemplazo').value,
+                dniReemplazo: document.getElementById('dniReemplazo').value,
+                fechaInicio: document.getElementById('fechaInicio').value,
+                fechaFin: document.getElementById('fechaFin').value,
+                totalDias: document.getElementById('totalDias').value,
+                formaAbono: document.getElementById('formaAbono').value,
+                telefono: document.getElementById('telefono').value,
+                pagoTotal: document.getElementById('pagoTotal').value,
+                costoProveedorDia: document.getElementById('costoProveedorDia').value,
+                costoTotal: document.getElementById('costoTotal').value
+            };
+
+            // Show loading
+            document.getElementById('loadingOverlay').classList.add('show');
+
+            // Submit to Microsoft Forms (via iframe in background)
+            await submitToMicrosoftForms(formData);
+
+            // Hide loading after 2 seconds
+            setTimeout(() => {
+                document.getElementById('loadingOverlay').classList.remove('show');
+                showSuccessScreen();
+            }, 2000);
+        });
+
+        async function submitToMicrosoftForms(data) {
+            // URL del Google Apps Script
+            const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyChcqDfsQ8Xf4RXk_U5boyxKQ9s3I5E6W0snKVDyEviPX1hKNzoywzOWhYvm_34bHDDQ/exec';
+            
+            try {
+                // Construir URL con parámetros GET
+                const params = new URLSearchParams(data);
+                const urlWithParams = `${GOOGLE_SCRIPT_URL}?${params.toString()}`;
+                
+                console.log('📤 Enviando datos a Google Sheets...');
+                
+                // Enviar usando GET
+                const response = await fetch(urlWithParams, {
+                    method: 'GET',
+                    redirect: 'follow'
+                });
+                
+                const text = await response.text();
+                console.log('📥 Respuesta del servidor:', text);
+                
+                if (text.includes('OK') || text.includes('guardados')) {
+                    console.log('✅ Datos guardados exitosamente en Google Sheets');
+                    return true;
+                } else {
+                    console.log('⚠️ Respuesta inesperada:', text);
+                    return false;
+                }
+                
+            } catch (error) {
+                console.error('❌ Error al enviar a Google Sheets:', error);
+                return false;
+            }
+        }
+
+        function showSuccessScreen() {
+            document.getElementById('formSection').classList.add('hidden');
+            document.getElementById('successSection').classList.add('show');
+
+            // Generate WhatsApp message
+            const message = generateWhatsAppMessage();
+            document.getElementById('whatsappMessage').textContent = message;
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function generateWhatsAppMessage() {
+            const fechaInicio = formatDate(formData.fechaInicio);
+            const fechaFin = formatDate(formData.fechaFin);
+
+            let fechasTexto = '';
+            if (formData.totalDias === '1') {
+                fechasTexto = fechaInicio;
+            } else {
+                fechasTexto = `${fechaInicio} al ${fechaFin}`;
+            }
+
+            let mensaje = `${formData.oficina}
+Auxiliar: ${formData.nombreReemplazo}
+DNI: ${formData.dniReemplazo}`;
+
+            if (formData.telefono && formData.telefono.trim() !== '') {
+                mensaje += `
+YAPE: ${formData.telefono}`;
+            }
+
+            mensaje += `
+Días trabajados: ${formData.totalDias}
+Fecha: ${fechasTexto}
+Pago total al auxiliar: S/. ${formData.pagoTotal}
+Costo proveedor S/. ${formData.costoTotal} + IGV`;
+
+            return mensaje;
+        }
+
+        function formatDate(dateString) {
+            if (!dateString) return '';
+            const date = new Date(dateString);
+            const day = date.getDate();
+            const month = date.getMonth() + 1;
+            return `${day.toString().padStart(2, '0')}/${month.toString().padStart(2, '0')}`;
+        }
+
+        function copyToClipboard() {
+            const message = document.getElementById('whatsappMessage').textContent;
+
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(message).then(() => {
+                    showNotification();
+                });
+            } else {
+                const textarea = document.createElement('textarea');
+                textarea.value = message;
+                textarea.style.position = 'fixed';
+                textarea.style.opacity = '0';
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                showNotification();
+            }
+        }
+
+        function showNotification() {
+            const notification = document.getElementById('notification');
+            notification.classList.add('show');
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        function openWhatsApp() {
+            const message = document.getElementById('whatsappMessage').textContent;
+            const encodedMessage = encodeURIComponent(message);
+            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+            if (isMobile) {
+                window.location.href = `whatsapp://send?text=${encodedMessage}`;
+            } else {
+                window.open(`https://web.whatsapp.com/send?text=${encodedMessage}`, '_blank');
+            }
+        }
+
+        function newRequest() {
+            document.getElementById('personnelForm').reset();
+            document.getElementById('proveedor').value = 'Solim';
+            document.getElementById('costoProveedorDia').value = '121.00';
+            document.getElementById('successSection').classList.remove('show');
+            document.getElementById('formSection').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function goBack() {
+            window.history.back();
+        }
+
+        // Initialize calculations on load
+        calculateTotals();
+    </script>
+</body>
+</html>
